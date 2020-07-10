@@ -3,7 +3,9 @@ const express = require('express'),
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const dishRouter = require('./routes/dishRouter')
+const dishRouter = require('./routes/dishRouter');
+const promoRouter = require('./routes/promoRouter');
+const leaderRouter = require('./routes/leaderRouter');
 
 const hostname = 'localhost';
 const port = 3000;
@@ -12,31 +14,14 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use('/dishes', dishRouter);
-app.use('/dishes/:dishId', dishRouter)
+app.use('/dishes/:dishId', dishRouter);
 
+app.use('/promotions', promoRouter);
+app.use('/promotions/:promoId', promoRouter);
 
-app.get('/dishes/:dishId', (req,res,next) => {
+app.use('/leaders', leaderRouter);
+app.use('/leaders/:leaderId', leaderRouter);
 
-  res.end('Will send details of the dish' +req.params.dishId+ " to you ");
-});
-
-
-app.post('/dishes/:dishId', (req,res,next) => {
-    // Use POST to add a new resource
-  res.statusCode = 403;
-  res.end('POST operation not supported on /dishes/'+ req.params.dishId);
-});
-
-app.put('/dishes/:dishId', (req,res,next) => { 
-      // Use PUT when you want to modify a singular resource which is already a part of resources 
-  res.write('Updating the dish: ' + req.params.dishId + '\n');
-  res.end('Will update the dish: ' + req.body.name + 
-        ' with details: ' + req.body.description);
-});
-
-app.delete('/dishes/:dishId', (req,res,next) => {
-  res.end('Deleting dish: ' + req.params.dishId);
-});
 
 
 app.use(express.static(__dirname + '/public'));

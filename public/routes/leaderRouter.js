@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 
-const dishRouter = express.Router();
-dishRouter.use(bodyparser.json());
+const leaderRouter = express.Router();
+leaderRouter.use(bodyparser.json());
 
-dishRouter.route('/')
+leaderRouter.route('/')
 .use((req,res,next) => { 
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
@@ -12,42 +12,42 @@ dishRouter.route('/')
 })
 .get((req,res,next) => {
   
-    res.end('Will send all dishses to you!');
+    res.end('Will send all promotions to you!');
 })
 .post((req,res,next) => {
     // Use POST to add a new resource
-    res.end('Will add the dish: ' + req.body.name + ' with details: ' + req.body.description);
+    res.end('Will add the promotion: ' + req.body.name + ' with details: ' + req.body.description);
   }) 
 .put((req,res,next) => { 
       // Use PUT when you want to modify a singular resource which is already a part of resources 
     res.statusCode = 403;
-    res.end('PUT operation not supported on /dishes');
+    res.end('PUT operation not supported on /promotions');
 })
 .delete((req,res,next) => {
-    res.end('Deleting all dishes');
+    res.end('Deleting all promotions');
 });
 
 
-dishRouter.route('/:dishId')
+leaderRouter.route('/:leaderId')
 .get((req,res,next) => {
-    res.end('Will send details of the dish' +req.params.dishId+ " to you ");
+    res.end('Will send details of the promotion' +req.params.leaderId + " to you ");
 })
 .post((req,res,next) => {
       // Use POST to add a new resource
     res.statusCode = 403;
-    res.end('POST operation not supported on /dishes/'+ req.params.dishId);
+    res.end('POST operation not supported on /promotions/'+ req.params.leaderId);
 })
 .put((req,res,next) => { 
         // Use PUT when you want to modify a singular resource which is already a part of resources 
-    res.write('Updating the dish: ' + req.params.dishId + '\n');
-    res.end('Will update the dish: ' + req.body.name + 
+    res.write('Updating the promotion: ' + req.params.leaderId + '\n');
+    res.end('Will update the promotion: ' + req.body.name + 
           ' with details: ' + req.body.description);
   })
 .delete((req,res,next) => {
-    res.end('Deleting dish: ' + req.params.dishId);
+    res.end('Deleting promotion: ' + req.params.leaderId);
 });
   
 
 
 
-module.exports = dishRouter;  
+module.exports = leaderRouter;  
