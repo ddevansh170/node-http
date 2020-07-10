@@ -3,39 +3,17 @@ const express = require('express'),
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+const dishRouter = require('./routes/dishRouter')
+
 const hostname = 'localhost';
 const port = 3000;
 
 const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use('/dishes', dishRouter);
+app.use('/dishes/:dishId', dishRouter)
 
-app.use('/dishes', (req,res,next) => {
-  
-  next();
-} );
-
-
-app.get('/dishes', (req,res,next) => {
-
-  res.end('Will send all dishses to you!');
-});
-
-
-app.post('/dishes', (req,res,next) => {
-  // Use POST to add a new resource
-  res.end('Will add the dish: ' + req.body.name + ' with details: ' + req.body.description);
-});
-
-app.put('/dishes', (req,res,next) => { 
-    // Use PUT when you want to modify a singular resource which is already a part of resources 
-  res.statusCode = 403;
-  res.end('PUT operation not supported on /dishes');
-});
-
-app.delete('/dishes', (req,res,next) => {
-  res.end('Deleting all dishes');
-});
 
 app.get('/dishes/:dishId', (req,res,next) => {
 
